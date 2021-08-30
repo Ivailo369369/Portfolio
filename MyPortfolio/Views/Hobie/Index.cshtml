@@ -1,0 +1,19 @@
+﻿@model IEnumerable<MyPortfolio.ViewModels.HobieViewModel.IndexHobieViewModel> 
+
+@{ 
+    ViewData["Title"] = "Hobies";
+} 
+
+<div class="col-md-12 mb-20 object-non-visible animated object-visible fadeInUp" data-animation-effect="fadeInUp">
+    <h3 class="title text-center object-non-visible animated object-visible fadeInUp" data-animation-effect="fadeInUp" data-effect-delay="400"><b>@ViewData["Title"]</b></h3><hr />
+    <div class="separator-2"></div>
+    @foreach (var hobie in Model)
+    {
+            <p><i class="fa fa-check-square"></i><b> @hobie.Name</b></p>
+             @if (User.IsInRole("Admin"))
+             {
+                 <a asp-route-id="@hobie.Id" asp-controller="Hobie" asp-action="Remove" class="btn btn-outline-dark">Remove</a> 
+             }
+             <hr />
+    }
+</div>

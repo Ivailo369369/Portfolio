@@ -1,0 +1,68 @@
+﻿@model MyPortfolio.ViewModels.BidingViewModels.CreateMessageViewModel
+
+@{
+    ViewData["Title"] = "Message";
+}
+<title>@ViewData["Title"]</title>
+<body>
+    <form asp-action="Create" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <h2 class="w3-center">Contact me</h2>
+
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
+            <div class="w3-rest">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" readonly="readonly" class="form-control" placeholder="Username" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
+            <div class="w3-rest">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" placeholder="First Name" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
+            <div class="w3-rest">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" placeholder="Last Name" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-envelope-o"></i></div>
+            <div class="w3-rest">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" placeholder="Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-pencil"></i></div>
+            <div class="w3-rest">
+                <label asp-for="TextMessage" class="control-label"></label>
+                <input asp-for="TextMessage" class="form-control" placeholder="Message" />
+                <span asp-validation-for="TextMessage" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="w3-center">
+                <input type="submit" value="Send" class="w3-button w3-section w3-blue w3-ripple" />
+            </p>
+        </div>
+    </form>
+
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

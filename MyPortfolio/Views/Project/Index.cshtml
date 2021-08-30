@@ -1,0 +1,71 @@
+﻿@model IEnumerable<MyPortfolio.ViewModels.ProjectViewModel.IndexProjectViewModel>
+
+@{
+    ViewData["Title"] = "Projects";
+}
+
+<head>
+    <style>
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            border-block-color: black;
+            max-width: 100%;
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+        }
+
+            .card h1 {
+                background-color: grey;
+            }
+
+            .card p {
+                background-color: white;
+            }
+
+        .header {
+            padding: 150px;
+            font-size: 150px;
+            text-align: center;
+            background-image: url("https://www.teahub.io/photos/full/88-884601_web-design-wallpaper-hd.jpg");
+            height: 60%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        } 
+    </style>
+</head>
+<div class="header">
+
+</div>
+<body>
+    <div class="w3-content w3-centur w3-justify w3-text-grey w3-padding-32"></div>
+        <h2>Software <b>@ViewData["Title"]</b></h2>
+        <hr class="w3-opacity">
+        <br />
+        <div class="container">
+            <div class="row justify-content-between">
+                @foreach (var project in Model)
+                {
+                    <div class="col-md-4">
+                        <div class="card">
+                            <a href="@project.Image">
+                                <img src="@project.Image" style="width:100%">
+                            </a>
+                            <h1>@project.Name</h1>
+                            <p><b>Description:</b> @project.Description</p>
+                            <p><b>Responsibilities:</b> @project.Responsibilities</p>
+                            <p><b>Technologies:</b> @project.Technologies</p>
+                            <p><b>Source Code:</b> <a href="@project.SourceCode">@project.SourceCode</a></p>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a asp-route-id="@project.Id" asp-controller="Project" asp-action="Edit" class="btn btn-outline-dark"><b>Edit</b></a>
+                                <a asp-route-id="@project.Id" asp-controller="Project" asp-action="Remove" class="btn btn-outline-dark"><b>Remove</b></a>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+</body>

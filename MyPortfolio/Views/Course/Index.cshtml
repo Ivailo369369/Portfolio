@@ -1,0 +1,31 @@
+﻿@model IEnumerable<MyPortfolio.ViewModels.CourseViewModel.IndexCourseViewModel>
+
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<style>
+    html, body, h1, h2, h3, h4, h5, h6 {
+        font-family: "Roboto", sans-serif
+    }
+</style>
+
+<body>
+    <div class="w3-container w3-card w3-white">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Taken <b>Courses</b></h2>
+        <div class="w3-container">
+            @foreach (var course in Model)
+            {
+                <h5 class="w3-opacity"><b>@course.Name</b></h5>
+                <p><b>Certificate</b> - @course.Certificate</p><br />
+                <br />
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-route-id="@course.Id" asp-controller="Course" asp-action="Edit" class="btn btn-outline-dark"><b>Edit</b></a>
+                    <a asp-route-id="@course.Id" asp-controller="Course" asp-action="Remove" class="btn btn-outline-dark"><b>Remove</b></a> 
+                }
+                <hr>
+            }
+        </div>
+    </div>
+</body>

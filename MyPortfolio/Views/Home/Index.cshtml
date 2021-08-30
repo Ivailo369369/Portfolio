@@ -1,0 +1,46 @@
+﻿@model IEnumerable<MyPortfolio.ViewModels.SkillViewModel.IndexSkillViewModel> 
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="w3-content w3-justify w3-text-grey w3-padding-32" id="about">
+    <h2>About <b>Me</b></h2>
+    <hr class="w3-opacity">
+    <p>
+        <b>
+            Hello! My name is Ivailo Topchiev and i am software engineer. I am open to new proposals and new challenges. I am ready to give 100% of myself. <br />
+            My passions are the modern C# and JavaScript technologies like ASP.NET Core MVC, ASP.NET MVC, ASP.NET Web API,
+            SQL Server, Entity Framework, Node.js, Html & Css, Bootstrap and more.
+        </b>
+    </p>
+    <h3 class="w3-padding-16">My Professional <b>Skills</b></h3>
+    @foreach (var skill in Model)
+    {
+        <p class="w3-wide"><b>@skill.Name</b></p>
+        <div class="w3-light-grey">
+            <div class="w3-container w3-center w3-padding-small w3-dark-grey" style="width:@skill.Level%">@skill.Level%</div>
+        </div><br />
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-route-id="@skill.Id" asp-controller="Skill" asp-action="Edit" class="btn btn-outline-dark"><b>Edit</b></a> 
+            <a asp-route-id="@skill.Id" asp-controller="Skill" asp-action="Remove" class="btn btn-outline-dark"><b>Remove</b></a>
+        }  
+        <hr />
+    }
+    <br />
+    <h3 class="w3-padding-16"><b>Language</b></h3>
+    <p class="w3-wide"><b>Native Bulgarian</b></p>
+    <div class="w3-light-grey">
+        <div class="w3-container w3-center w3-padding-small w3-dark-grey" style="width:100%">100%</div>
+    </div><br />
+    <p class="w3-wide"><b>Excellent reading and writing in English</b></p>
+    <div class="w3-light-grey">
+        <div class="w3-container w3-center w3-padding-small w3-dark-grey" style="width:85%">85%</div>
+    </div><br />
+    <p class="w3-wide"><b>Good speaking in English</b></p>
+    <div class="w3-light-grey">
+        <div class="w3-container w3-center w3-padding-small w3-dark-grey" style="width:85%">85%</div>
+    </div><br />
+</div>

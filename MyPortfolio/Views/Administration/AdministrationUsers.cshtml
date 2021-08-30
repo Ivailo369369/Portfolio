@@ -1,0 +1,120 @@
+﻿@model IEnumerable<MyPortfolio.ViewModels.AdministrationVIewModel.UsersViewModel>
+
+@{
+    ViewData["Title"] = "Administration";
+}
+<br />
+<a asp-controller="Course" asp-action="Add" class="w3-button w3-button-group w3-light-grey w3-padding-large">Add Course</a>
+<a asp-controller="Education" asp-action="Add" class="w3-button w3-button-group w3-light-grey w3-padding-large">Add Education</a>
+<a asp-controller="Skill" asp-action="Add" class="w3-button w3-button-group w3-light-grey w3-padding-large">Add Skill</a>
+<a asp-controller="Hobie" asp-action="Add" class="w3-button w3-button-group w3-light-grey w3-padding-large">Add Hobie</a>
+<br />
+<br />
+<a asp-controller="Project" asp-action="Add" class="w3-button w3-light-grey w3-padding-large">Add Project</a>
+<a asp-controller="Experience" asp-action="Add" class="w3-button w3-button-group w3-light-grey w3-padding-large">Add Experience</a>
+<a asp-controller="Administration" asp-action="GetAdmins" class="w3-button w3-light-grey w3-padding-large">Admins</a> 
+<a asp-controller="Message" asp-action="Messages" class="w3-button w3-button-group w3-light-grey w3-padding-large">Messages</a> 
+<br />
+<br />
+
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        #myTable {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #ddd;
+            font-size: 18px;
+        }
+
+            #myTable th, #myTable td {
+                text-align: left;
+                padding: 12px;
+            }
+
+            #myTable tr {
+                border-bottom: 1px solid #ddd;
+            }
+
+                #myTable tr.header, #myTable tr:hover {
+                    background-color: white;
+                }
+
+        input[type=text] {
+            width: 130px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: white;
+            background-image: url('searchicon.png');
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            padding: 12px 20px 12px 40px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+        }
+
+            input[type=text]:focus {
+                width: 100%;
+            }
+    </style>
+</head>
+<body>
+
+    <h2><b>Users</b></h2>
+    <form>
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for usernames..." title="Type in a name">
+    </form>
+    <table id="myTable">
+        <tr class="header">
+            <th style="width:60%;">Username</th>
+            <th style="width:40%;">Email</th>
+            <th style="width:40%;">Email Confirmed</th>
+            <th style="width:40%;">Role</th>
+            <th style="width:40%;">Locked</th>
+            <th style="width:40%;">Ban</th>
+            <th style="width:40%;">UnBan</th>
+        </tr>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Username</td>
+                <td>@user.Email</td>
+                <td>@user.EmailConfirmed</td>
+                <td>@user.Role</td>
+                <td>@user.IsLocked</td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td><a asp-route-id="@user.Id" asp-controller="Administration" asp-action="Ban" class="btn btn-danger" role="button">Ban</a></td>
+                    <td><a asp-route-id="@user.Id" asp-controller="Administration" asp-action="UnBan" class="btn btn-danger" role="button">UnBan</a></td>
+                }
+            </tr>
+        }
+    </table>
+
+    <script>
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+
+</body>
