@@ -7,7 +7,6 @@ namespace MyPortfolio.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         { 
-
         }
     }
 }

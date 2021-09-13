@@ -36,7 +36,9 @@
 
         public async Task<EditProjectViewModel> PrepareForEditingAsync(int id)
         {
-            var project = await this.context.Projects.FindAsync(id);
+            var project = await this.context
+                .Projects
+                .FindAsync(id);
 
             var model = new EditProjectViewModel()
             {
@@ -87,8 +89,12 @@
 
         public async Task RemoveAsync(int id)
         {
-            var project = await this.context.Projects.FindAsync(id);
+            var project = await this.context
+                .Projects
+                .FindAsync(id);
+
             project.IsDeleted = true;
+
             await this.context.SaveChangesAsync();
         }
     }

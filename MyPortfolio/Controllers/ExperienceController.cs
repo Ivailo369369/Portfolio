@@ -13,9 +13,9 @@
 
     public class ExperienceController : Controller
     {
-        private readonly IExperienceService service;
+        private readonly IExperienceService experience;
 
-        public ExperienceController(IExperienceService service) => this.service = service;
+        public ExperienceController(IExperienceService experience) => this.experience = experience;
 
         [Authorize(Roles = Admin)]
         [Authorize(Policy = WritePolicy)]
@@ -32,7 +32,7 @@
                 return this.View(); 
             }
 
-            await this.service.AddAsync(model);
+            await this.experience.AddAsync(model);
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -45,7 +45,8 @@
 
         public async Task<IActionResult> Index() 
         {
-            var model = await this.service.ExperiencesAsync();
+            var model = await this.experience.ExperiencesAsync();
+
             return this.View(model);
         }
 
@@ -54,7 +55,8 @@
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await this.service.PrepareForEditingAsync(id);
+            var model = await this.experience.PrepareForEditingAsync(id);
+
             return this.View(model);
         }
 
@@ -68,7 +70,7 @@
                 return this.View();
             }
 
-            await this.service.EditAsync(model);
+            await this.experience.EditAsync(model);
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -83,7 +85,7 @@
         [Authorize(Policy = WritePolicy)]
         public async Task<IActionResult> Remove(int id)
         {
-            await this.service.RemoveAsync(id);
+            await this.experience.RemoveAsync(id);
 
             this.TempData.Put("__Message", new MessageModel()
             {

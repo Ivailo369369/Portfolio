@@ -31,7 +31,9 @@
 
         public async Task<EditSkillViewModel> PrepareForEditingAsync(int id)
         {
-            var skill = await this.context.Skills.FindAsync(id);
+            var skill = await this.context
+                .Skills
+                .FindAsync(id);
 
             var model = new EditSkillViewModel()
             {
@@ -70,8 +72,12 @@
 
         public async Task RemoveAsync(int id)
         {
-            var skill = await this.context.Skills.FindAsync(id);
+            var skill = await this.context
+                .Skills
+                .FindAsync(id);
+
             skill.IsDeleted = true;
+
             await this.context.SaveChangesAsync(); 
         }
     }

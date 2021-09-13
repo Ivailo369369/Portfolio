@@ -13,9 +13,9 @@
 
     public class CourseController : Controller
     {
-        private readonly ICourseService service;
+        private readonly ICourseService course;
 
-        public CourseController(ICourseService service) => this.service = service;
+        public CourseController(ICourseService course) => this.course = course;
 
         [Authorize(Roles = Admin)]
         [Authorize(Policy = WritePolicy)]
@@ -32,7 +32,7 @@
                 return this.View();
             } 
 
-            await this.service.AddCourseAsync(model);
+            await this.course.AddCourseAsync(model);
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -45,7 +45,8 @@
 
         public async Task<IActionResult> Index() 
         {
-            var model = await this.service.GetAllCoursesAsync();
+            var model = await this.course.GetAllCoursesAsync();
+
             return View(model); 
         }
 
@@ -54,7 +55,8 @@
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await this.service.PrepareForEditingAsync(id);
+            var model = await this.course.PrepareForEditingAsync(id);
+
             return this.View(model);
         }
 
@@ -68,7 +70,7 @@
                 return this.View();
             } 
 
-            await this.service.EditAsync(model);
+            await this.course.EditAsync(model);
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -83,7 +85,7 @@
         [Authorize(Policy = WritePolicy)] 
         public async Task<IActionResult> Remove(int id)
         {
-            await this.service.RemoveAsync(id);
+            await this.course.RemoveAsync(id);
 
             this.TempData.Put("__Message", new MessageModel()
             {

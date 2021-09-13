@@ -48,7 +48,9 @@
 
         public async Task<EditEducationViewModel> PrepareForEditingAsync(int id)
         {
-            var education = await this.context.Educations.FindAsync(id); 
+            var education = await this.context
+                .Educations
+                .FindAsync(id); 
 
             var model = new EditEducationViewModel()
             {
@@ -76,6 +78,7 @@
             };
 
             this.context.Educations.Update(education);
+
             await this.context.SaveChangesAsync();
         }
     }

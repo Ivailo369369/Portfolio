@@ -34,7 +34,9 @@
 
         public async Task<EditExperienceViewModel> PrepareForEditingAsync(int id)
         {
-            var experience = await this.context.Experiences.FindAsync(id);
+            var experience = await this.context
+                .Experiences
+                .FindAsync(id);
 
             var model = new EditExperienceViewModel()
             {
@@ -82,8 +84,12 @@
 
         public async Task RemoveAsync(int id)
         {
-            var experience = await this.context.Experiences.FindAsync(id);
+            var experience = await this.context
+                .Experiences
+                .FindAsync(id);
+
             experience.IsDeleted = true;
+
             await this.context.SaveChangesAsync(); 
         }
     }

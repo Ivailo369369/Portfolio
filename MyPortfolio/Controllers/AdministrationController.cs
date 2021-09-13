@@ -14,14 +14,15 @@
     [Authorize(Policy = WritePolicy)]
     public class AdministrationController : Controller
     {
-        private readonly IAdministrationService service;
+        private readonly IAdministrationService administration;
 
-        public AdministrationController(IAdministrationService service) => this.service = service; 
+        public AdministrationController(IAdministrationService administration) => this.administration = administration; 
 
         [HttpGet] 
         public IActionResult Create()
         {
-            var model = this.service.PrepareForCreateRole();
+            var model = this.administration.PrepareForCreateRole();
+
             return this.View(model);
         }
         
@@ -33,7 +34,7 @@
                 return this.View(); 
             } 
 
-            await this.service.CrateRoleAsync(model);
+            await this.administration.CrateRoleAsync(model);
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -46,19 +47,21 @@
 
         public async Task<IActionResult> GetAdmins()
         {
-            var model = await this.service.GetAllAdminsAsync();
+            var model = await this.administration.GetAllAdminsAsync();
+
             return this.View(model); 
         }
 
         public async Task<IActionResult> AdministrationUsers() 
         {
-            var model = await this.service.GetAllUsersAsync();
+            var model = await this.administration.GetAllUsersAsync();
+
             return this.View(model);   
         }
 
         public async Task<IActionResult> Ban(string id)
         {
-            await this.service.BanAsync(id); 
+            await this.administration.BanAsync(id); 
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -71,7 +74,7 @@
 
         public async Task<IActionResult> UnBan(string id)
         {
-            await this.service.UnBanAsync(id);
+            await this.administration.UnBanAsync(id);
 
             this.TempData.Put("__Message", new MessageModel()
             {

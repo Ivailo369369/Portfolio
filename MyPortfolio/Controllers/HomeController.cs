@@ -8,13 +8,13 @@
 
     public class HomeController : Controller
     {
-        private readonly ISkillService service;
+        private readonly ISkillService skill;
 
-        public HomeController(ISkillService service) => this.service = service;
+        public HomeController(ISkillService skill) => this.skill = skill;
         
         public async Task<IActionResult> Index()
         {
-            var model = await this.service.GetAllSkillsAsync();
+            var model = await this.skill.GetAllSkillsAsync();
             return this.View(model);
         }
 

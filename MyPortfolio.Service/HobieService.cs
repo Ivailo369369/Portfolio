@@ -40,8 +40,12 @@
 
         public async Task RemoveAsync(int id)
         {
-            var hobie = await this.context.Hobies.FindAsync(id);
+            var hobie = await this.context
+                .Hobies
+                .FindAsync(id);
+
             hobie.IsDeleted = true;
+
             await this.context.SaveChangesAsync(); 
         }
     }

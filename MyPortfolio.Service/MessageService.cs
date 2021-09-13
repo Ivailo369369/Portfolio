@@ -66,8 +66,12 @@
 
         public async Task ClearAsync(int id)
         {
-            var message = await this.context.Messages.FindAsync(id);
+            var message = await this.context
+                .Messages
+                .FindAsync(id);
+
             message.IsDeleted = true;
+
             await this.context.SaveChangesAsync(); 
         }
 

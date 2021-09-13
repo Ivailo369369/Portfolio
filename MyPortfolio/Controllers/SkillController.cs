@@ -13,9 +13,9 @@
 
     public class SkillController : Controller
     {
-        private readonly ISkillService service;
+        private readonly ISkillService skill;
 
-        public SkillController(ISkillService service) => this.service = service;
+        public SkillController(ISkillService skill) => this.skill = skill;
 
         [Authorize(Roles = Admin)]
         [Authorize(Policy = WritePolicy)]
@@ -32,7 +32,7 @@
                 return this.View();  
             } 
 
-            await this.service.AddAsync(model);
+            await this.skill.AddAsync(model);
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -48,7 +48,8 @@
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await this.service.PrepareForEditingAsync(id);
+            var model = await this.skill.PrepareForEditingAsync(id); 
+
             return this.View(model);
         }
 
@@ -62,7 +63,7 @@
                 return this.View();
             } 
 
-            await this.service.EditAsync(model);
+            await this.skill.EditAsync(model);
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -77,7 +78,7 @@
         [Authorize(Policy = WritePolicy)]
         public async Task<IActionResult> Remove(int id)
         {
-            await this.service.RemoveAsync(id); 
+            await this.skill.RemoveAsync(id); 
 
             this.TempData.Put("__Message", new MessageModel()
             {

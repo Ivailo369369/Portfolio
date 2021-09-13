@@ -32,7 +32,9 @@
 
         public async Task<EditCourseViewModel> PrepareForEditingAsync(int id)
         {
-            var course = await this.context.Courses.FindAsync(id);
+            var course = await this.context
+                .Courses
+                .FindAsync(id);
 
             var model = new EditCourseViewModel()
             {
@@ -71,8 +73,12 @@
 
         public async Task RemoveAsync(int id)
         {
-            var course = await this.context.Courses.FindAsync(id);
+            var course = await this.context
+                .Courses
+                .FindAsync(id);
+
             course.IsDeleted = true;
+
             await this.context.SaveChangesAsync(); 
         }
     }

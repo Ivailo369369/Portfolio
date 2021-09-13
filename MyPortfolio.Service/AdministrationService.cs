@@ -19,7 +19,8 @@
         private readonly UserManager<User> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
 
-        public AdministrationService(PortfolioDb context, 
+        public AdministrationService(
+            PortfolioDb context, 
             UserManager<User> userManager, 
             RoleManager<IdentityRole> roleManager)
         {
@@ -28,11 +29,9 @@
             this.roleManager = roleManager;
         }
 
-        public IdentityRole PrepareForCreateRole()
-           => new IdentityRole();
+        public IdentityRole PrepareForCreateRole() => new IdentityRole();
 
-        public async Task CrateRoleAsync(IdentityRole model) 
-            => await this.roleManager.CreateAsync(model);
+        public async Task CrateRoleAsync(IdentityRole model) => await this.roleManager.CreateAsync(model);
 
         public async Task<IEnumerable<UsersViewModel>> GetAllUsersAsync()  
        => await (from user in context 
@@ -70,16 +69,22 @@
 
         public async Task BanAsync(string id)
         {
-            var user = await this.userManager.FindByIdAsync(id);
+            var user = await this.userManager
+                .FindByIdAsync(id);
+
             user.LockoutEnabled = true;
             user.LockoutEnd = DateTime.Now.AddDays(14);
+
             await this.context.SaveChangesAsync(); 
         } 
 
         public async Task UnBanAsync(string id) 
         {
-            var user = await this.userManager.FindByIdAsync(id);
+            var user = await this.userManager
+                .FindByIdAsync(id);
+
             user.LockoutEnabled = false;
+
             await this.context.SaveChangesAsync();
         }
     }

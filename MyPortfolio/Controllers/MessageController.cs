@@ -13,25 +13,28 @@
 
     public class MessageController : Controller
     {
-        private readonly IMessageService service;
-        private readonly ICurrentUserService currentUserService; 
+        private readonly IMessageService message;
+        private readonly ICurrentUserService currentUser; 
 
-        public MessageController(IMessageService service,
-            ICurrentUserService currentUserService)
+        public MessageController(
+            IMessageService message,
+            ICurrentUserService currentUser)
         {
-            this.service = service;
-            this.currentUserService = currentUserService;
+            this.message = message;
+            this.currentUser = currentUser;
         }
 
         [HttpGet]
         [Authorize]
         public IActionResult Create() 
         {
-            var username = this.currentUserService.GetUsername();
+            var username = this.currentUser.GetUsername();
+
             var model = new CreateMessageViewModel
             {
                 Username = username,
             };
+
             return this.View(model);
         }
 
@@ -44,7 +47,7 @@
                 return this.View(); 
             } 
 
-            await this.service.CreateAsync(model);
+            await this.message.CreateAsync(model);
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -59,7 +62,8 @@
         [Authorize(Policy = WritePolicy)]
         public async Task<IActionResult> Messages() 
         {
-            var model = await this.service.MessagesAsync();
+            var model = await this.message.MessagesAsync();
+
             return this.View(model); 
         }
 
@@ -67,7 +71,8 @@
         [Authorize(Policy = WritePolicy)]
         public async Task<IActionResult> Details(int id)
         {
-            var model = await this.service.DetaislsAsync(id);
+            var model = await this.message.DetaislsAsync(id);
+
             return this.View(model);
         }
 
@@ -75,7 +80,7 @@
         [Authorize(Policy = WritePolicy)]
         public async Task<IActionResult> Clear(int id)
         {
-            await this.service.ClearAsync(id);
+            await this.message.ClearAsync(id);
 
             this.TempData.Put("__Message", new MessageModel()
             {

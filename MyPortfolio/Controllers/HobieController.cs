@@ -12,9 +12,9 @@
 
     public class HobieController : Controller
     {
-        private readonly IHobieService service; 
+        private readonly IHobieService hobie; 
 
-        public HobieController(IHobieService service) => this.service = service;
+        public HobieController(IHobieService hobie) => this.hobie = hobie;
 
         [Authorize(Roles = Admin)]
         [Authorize(Policy = WritePolicy)]
@@ -31,7 +31,7 @@
                 return this.View(); 
             } 
 
-            await this.service.AddAsync(model); 
+            await this.hobie.AddAsync(model); 
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -45,7 +45,8 @@
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var model = await this.service.GetAllHobiesAsync();
+            var model = await this.hobie.GetAllHobiesAsync();
+
             return this.View(model);
         }
 
@@ -53,7 +54,7 @@
         [Authorize(Policy = WritePolicy)] 
         public async Task<IActionResult> Remove(int id)
         {
-            await this.service.RemoveAsync(id); 
+            await this.hobie.RemoveAsync(id); 
 
             this.TempData.Put("__Message", new MessageModel()
             {

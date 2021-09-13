@@ -13,9 +13,9 @@
 
     public class ProjectController : Controller
     {
-        private readonly IProjectService service;
+        private readonly IProjectService project;
 
-        public ProjectController(IProjectService service) => this.service = service;
+        public ProjectController(IProjectService project) => this.project = project; 
 
         [Authorize(Roles = Admin)]
         [Authorize(Policy = WritePolicy)]
@@ -32,7 +32,7 @@
                 return this.View(); 
             } 
 
-            await this.service.AddAsync(model); 
+            await this.project.AddAsync(model); 
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -45,7 +45,8 @@
 
         public async Task<IActionResult> Index()
         {
-            var model = await this.service.GetAllProjectsAsync();
+            var model = await this.project.GetAllProjectsAsync(); 
+
             return this.View(model);
         }
 
@@ -54,7 +55,8 @@
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await this.service.PrepareForEditingAsync(id);
+            var model = await this.project.PrepareForEditingAsync(id); 
+
             return this.View(model);
         }
 
@@ -68,7 +70,7 @@
                 return this.View();
             } 
 
-            await this.service.EditAsync(model);
+            await this.project.EditAsync(model);
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -83,7 +85,7 @@
         [Authorize(Policy = WritePolicy)]
         public async Task<IActionResult> Remove(int id)
         {
-            await this.service.RemoveAsync(id); 
+            await this.project.RemoveAsync(id); 
 
             this.TempData.Put("__Message", new MessageModel()
             {

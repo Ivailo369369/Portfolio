@@ -13,9 +13,9 @@
 
     public class EducationController : Controller
     {
-        private readonly IEducationService service;
+        private readonly IEducationService education;
 
-        public EducationController(IEducationService service) => this.service = service;
+        public EducationController(IEducationService education) => this.education = education;
 
         [Authorize(Roles = Admin)]
         [Authorize(Policy = WritePolicy)]
@@ -32,7 +32,7 @@
                 return this.View();
             } 
 
-            await this.service.AddAsync(model);
+            await this.education.AddAsync(model);
 
             this.TempData.Put("__Message", new MessageModel()
             {
@@ -45,7 +45,8 @@
 
         public async Task<IActionResult> Index()
         {
-            var model = await this.service.EducationsAsync();
+            var model = await this.education.EducationsAsync();
+
             return View(model);
         }
 
@@ -54,7 +55,8 @@
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await this.service.PrepareForEditingAsync(id);
+            var model = await this.education.PrepareForEditingAsync(id);
+
             return this.View(model);
         }
 
@@ -68,7 +70,7 @@
                 return this.View();
             }
 
-            await this.service.EditAsync(model);
+            await this.education.EditAsync(model);
 
             this.TempData.Put("__Message", new MessageModel()
             {
